@@ -17,14 +17,26 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 
+;;(setenv "http_proxy" "http://localhost:3128")(setenv "https_proxy" "https://localhost:3128")
+
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Google Drive/GTD/newgtd.org" "Tasks")
+      '(("t" "Todo" entry (file+headline "~/GTD/newgtd.org" "Tasks")
              "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/Google Drive/GTD/journal.org")
+        ("j" "Journal" entry (file+datetree "~/GTD/journal.org")
              "* %?\nEntered on %U\n  %i\n  %a")))
 
 (setq org-agenda-include-diary t)
-(setq org-agenda-files (list "~/Google Drive/GTD/newgtd.org"
+(setq org-agenda-files (list "~/GTD/newgtd.org"
                             ; "~/org/school.org"
                             ; "~/org/home.org"
                              ))
+
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+(setq mac-right-option-modifier nil)
